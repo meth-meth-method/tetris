@@ -106,13 +106,6 @@ function drawMatrix(matrix, offset)
 }
 
 const arena = new Arena(20, 20);
-arena.matrix.forEach((row, y) => {
-    row.forEach((v, x) => {
-        if (x < 4 || x > 15 || y > 17) {
-            arena.matrix[y][x] = 9;
-        }
-    });
-});
 
 let pat;
 let scale = 20;
@@ -120,7 +113,7 @@ let dropDelay = 1;
 let dropCounter = 0;
 
 function draw() {
-    context.fillStyle = 'black';
+    context.fillStyle = 'white';
     context.fillRect(0, 0, 600, 600);
 
     update(1/60);
@@ -135,7 +128,7 @@ function matrixIntersect(outer, inner, offsetX = 0, offsetY = 0)
 {
     return inner.map((row, y) => {
         return row.map((v, x) => {
-            return outer[y + offsetY][x + offsetX];
+            return outer[y + offsetY] && outer[y + offsetY][x + offsetX];
         });
     });
 }
