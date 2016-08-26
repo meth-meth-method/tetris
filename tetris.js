@@ -3,18 +3,18 @@ const context = canvas.getContext('2d');
 
 const colors = [
     null,
-    'red',
-    'blue',
-    'green',
-    'purple',
-    'orange',
-    null,
+    '#FF0D72', // Redish
+    '#0DC2FF',
+    '#0DFF72',
+    '#F538FF',
+    '#FF8E0D',
+    '#FFE138',
     null,
     null,
     'grey',
 ];
 
-const patterns = ['line', 'LR', 'LL'];
+const patterns = ['SL','SR','line', 'LR', 'LL', 'box'];
 function getRandomPattern()
 {
     return createPattern(patterns[Math.random() * patterns.length | 0]);
@@ -28,10 +28,10 @@ function createPattern(type)
 
     if (type === 'line') {
         pat.matrix = [
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
-            [0, 1, 0, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
         ];
     } else if (type === 'LR') {
         pat.matrix = [
@@ -44,6 +44,21 @@ function createPattern(type)
             [0, 3, 0],
             [0, 3, 0],
             [3, 3, 0],
+        ];
+    } else if (type === 'box') {
+        pat.matrix = [
+            [4, 4],
+            [4, 4],
+        ];
+    } else if (type === 'SL') {
+        pat.matrix = [
+            [5, 5, 0],
+            [0, 5, 5],
+        ];
+    } else if (type === 'SR') {
+        pat.matrix = [
+            [0, 6, 6],
+            [6, 6, 0],
         ];
     }
 
@@ -113,7 +128,7 @@ let dropDelay = 1;
 let dropCounter = 0;
 
 function draw() {
-    context.fillStyle = 'white';
+    context.fillStyle = 'black';
     context.fillRect(0, 0, 600, 600);
 
     update(1/60);
