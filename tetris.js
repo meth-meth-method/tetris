@@ -12,7 +12,7 @@ const colors = [
     '#3877FF',
 ];
 
-const patterns = ['SL','SR','line', 'LR', 'LL', 'box', 'T'];
+const patterns = ['SL','SR','I', 'LR', 'LL', 'SQ', 'T'];
 
 function createMatrix(w, h) {
     const matrix = [];
@@ -25,7 +25,7 @@ function createMatrix(w, h) {
 
 function createPattern(type)
 {
-    if (type === 'line') {
+    if (type === 'I') {
         return [
             [0, 1, 0, 0],
             [0, 1, 0, 0],
@@ -44,7 +44,7 @@ function createPattern(type)
             [0, 3, 0],
             [3, 3, 0],
         ];
-    } else if (type === 'box') {
+    } else if (type === 'SQ') {
         return [
             [4, 4],
             [4, 4],
