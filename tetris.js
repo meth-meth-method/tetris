@@ -208,8 +208,7 @@ function transpose(matrix) {
 }
 
 function update(dt) {
-    if (!player.matrix) {
-        updateScore();
+    if (player.matrix === null) {
         player.matrix = getRandomPattern();
         player.pos = [
             (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0),
@@ -217,6 +216,7 @@ function update(dt) {
         ];
         if (collide(player, arena)) {
             player.score = 0;
+            updateScore();
             arena.forEach(row => row.fill(0));
         }
     }
@@ -252,6 +252,7 @@ const player = {
     matrix: null,
 }
 
+updateScore();
 draw();
 
 
