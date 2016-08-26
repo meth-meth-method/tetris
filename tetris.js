@@ -72,7 +72,6 @@ function createPattern(type)
 
 function collide(player, arena) {
     const [oX, oY] = player.pos;
-    console.log(oX, oY);
     for (let y = 0; y < player.matrix.length; ++y) {
         for (let x = 0; x < player.matrix[y].length; ++x) {
             if (player.matrix[y][x] !== 0 &&
