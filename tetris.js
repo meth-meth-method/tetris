@@ -223,7 +223,7 @@ function update(dt) {
             0,
         ];
         if (collide(player, arena)) {
-            score = 0;
+            player.score = 0;
             arena.forEach(row => row.fill(0));
         }
     }
