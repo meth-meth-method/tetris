@@ -9,12 +9,13 @@ const colors = [
     '#F538FF',
     '#FF8E0D',
     '#FFE138',
+    '#3877FF',
     null,
     null,
     'grey',
 ];
 
-const patterns = ['SL','SR','line', 'LR', 'LL', 'box'];
+const patterns = ['SL','SR','line', 'LR', 'LL', 'box', 'T'];
 function getRandomPattern()
 {
     return createPattern(patterns[Math.random() * patterns.length | 0]);
@@ -59,6 +60,12 @@ function createPattern(type)
         pat.matrix = [
             [0, 6, 6],
             [6, 6, 0],
+        ];
+    } else if (type === 'T') {
+        pat.matrix = [
+            [0, 7, 0],
+            [7, 7, 7],
+            [0, 0, 0],
         ];
     }
 
@@ -120,16 +127,17 @@ function drawMatrix(matrix, offset)
     });
 }
 
-const arena = new Arena(20, 20);
+const arena = new Arena(12, 20);
 
 let pat;
+let score = 0;
 let scale = 20;
 let dropDelay = 1;
 let dropCounter = 0;
 
 function draw() {
     context.fillStyle = 'black';
-    context.fillRect(0, 0, 600, 600);
+    context.fillRect(0, 0, arena.matrix[0].length * scale, 600);
 
     update(1/60);
     drawMatrix(arena.matrix, [0, 0]);
@@ -178,12 +186,37 @@ function merge(dest, source, offset)
 
 function sweep(matrix)
 {
+    let sweepCount = 1;
+    for (let y = matrix.length -1; y > 0; --y) {
+        let sweepable = true;
+        for (let x = 0; x < matrix[y].length; ++x) {
+            if (matrix[y][x] === 0) {
+                sweepable = false; break;
+            }
+        }
+        if (sweepable) {
+            const row = matrix.splice(y, 1)[0].fill(0);
+            matrix.unshift(row);
+            ++y;
+            score += sweepCount * 10;
+            updateScore();
+            sweepCount *= 2;
+        }
+    }
+}
 
+function updateScore() {
+    document.getElementById('score').innerText = score;
 }
 
 function update(dt) {
     if (!pat) {
+        updateScore();
         pat = getRandomPattern();
+        if (collide(pat, arena)) {
+            score = 0;
+            arena.matrix.forEach(row => row.fill(0));
+        }
     }
 
     dropCounter += dt;
@@ -205,11 +238,15 @@ const keyHandler = event => {
     const k = event.keyCode;
     if (event.type === 'keydown') {
         if (k === 69 || k === 81) {
-            pat.rotate(k === 69 ? -1 : 1);
+            pat.rotate(k === 69 ? 1 : -1);
             let test = 1;
             while (collide(pat, arena)) {
                 pat.pos[0] += test;
                 test = -(test + (test > 0 ? 1 : -1));
+
+                if (Math.abs(test) > 5) {
+                    throw new Error('Rotate offset overflow');
+                }
             }
         } else if (k === 65 || k === 68) {
             const diff = k === 65 ? -1 : 1;
