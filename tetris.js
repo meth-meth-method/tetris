@@ -71,11 +71,12 @@ function createPattern(type)
 }
 
 function collide(player, arena) {
-    const subset = matrixIntersect(arena, player.matrix,
-                                   player.pos[0], player.pos[1]);
-    for (let y = 0; y < subset.length; ++y) {
-        for (let x = 0; x < subset[y].length; ++x) {
-            if (subset[y][x] !== 0 && player.matrix[y][x] !== 0) {
+    const [oX, oY] = player.pos;
+    console.log(oX, oY);
+    for (let y = 0; y < player.matrix.length; ++y) {
+        for (let x = 0; x < player.matrix[y].length; ++x) {
+            if (player.matrix[y][x] !== 0 &&
+               (arena[y + oY] && arena[y + oY][x + oX]) !== 0) {
                 return true;
             }
         }
@@ -146,14 +147,6 @@ function keyHandler(event) {
             dropDelay = 1;
         }
     }
-}
-
-function matrixIntersect(outer, inner, offsetX = 0, offsetY = 0) {
-    return inner.map((row, y) => {
-        return row.map((v, x) => {
-            return outer[y + offsetY] && outer[y + offsetY][x + offsetX];
-        });
-    });
 }
 
 function merge(dest, source, offset) {
