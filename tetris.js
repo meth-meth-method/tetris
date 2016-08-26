@@ -51,15 +51,15 @@ function createPattern(type)
         ];
     } else if (type === 'SL') {
         return [
-            [0, 0, 0],
             [5, 5, 0],
             [0, 5, 5],
+            [0, 0, 0],
         ];
     } else if (type === 'SR') {
         return [
-            [0, 0, 0],
             [0, 6, 6],
             [6, 6, 0],
+            [0, 0, 0],
         ];
     } else if (type === 'T') {
         return [
