@@ -91,6 +91,7 @@ function draw() {
     drawMatrix(arena, [0, 0]);
     if (player.matrix) {
         drawMatrix(player.matrix, player.pos);
+        drawMatrix(preview, [0,0])
     }
     requestAnimationFrame(draw);
 }
@@ -208,7 +209,8 @@ function transpose(matrix) {
 
 function update(dt) {
     if (player.matrix === null) {
-        player.matrix = getRandomPattern();
+        player.matrix = preview;
+        preview = getRandomPattern();
         player.pos = [
             (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0),
             0,
@@ -242,6 +244,8 @@ document.addEventListener('keyup', keyHandler);
 
 let dropDelay = 1;
 let dropCounter = 0;
+
+let preview = getRandomPattern();
 
 const scale = 20;
 const arena = createMatrix(12, 20);
