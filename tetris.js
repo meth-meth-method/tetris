@@ -142,7 +142,8 @@ function playerMove(offset) {
 }
 
 function playerReset() {
-    player.matrix = createPiece('T');
+    const pieces = 'TJLOSZI';
+    player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
     player.pos.y = 0;
     player.pos.x = (arena[0].length / 2 | 0) -
                    (player.matrix[0].length / 2 | 0);
