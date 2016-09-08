@@ -30,4 +30,6 @@ const player = {
     matrix: matrix,
 };
 
-drawMatrix(player.matrix, player.pos);
+function draw() {
+    drawMatrix(player.matrix, player.pos);
+}
