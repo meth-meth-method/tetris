@@ -26,6 +26,53 @@ function createMatrix(w, h) {
     return matrix;
 }
 
+function createPiece(type)
+{
+    if (type === 'I') {
+        return [
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+        ];
+    } else if (type === 'L') {
+        return [
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 1],
+        ];
+    } else if (type === 'J') {
+        return [
+            [0, 1, 0],
+            [0, 1, 0],
+            [1, 1, 0],
+        ];
+    } else if (type === 'O') {
+        return [
+            [1, 1],
+            [1, 1],
+        ];
+    } else if (type === 'Z') {
+        return [
+            [1, 1, 0],
+            [0, 1, 1],
+            [0, 0, 0],
+        ];
+    } else if (type === 'S') {
+        return [
+            [0, 1, 1],
+            [1, 1, 0],
+            [0, 0, 0],
+        ];
+    } else if (type === 'T') {
+        return [
+            [0, 1, 0],
+            [1, 1, 1],
+            [0, 0, 0],
+        ];
+    }
+}
+
 function drawMatrix(matrix, offset) {
     matrix.forEach((row, y) => {
         row.forEach((value, x) => {
@@ -95,11 +142,7 @@ function playerMove(offset) {
 }
 
 function playerReset() {
-    player.matrix = [
-        [0, 1, 0],
-        [1, 1, 1],
-        [0, 0, 0],
-    ];
+    player.matrix = createPiece('T');
     player.pos.y = 0;
     player.pos.x = (arena[0].length / 2 | 0) -
                    (player.matrix[0].length / 2 | 0);
