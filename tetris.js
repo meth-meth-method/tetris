@@ -34,7 +34,8 @@ function draw() {
     drawMatrix(player.matrix, player.pos);
 }
 
-function update() {
+function update(time) {
+    console.log(time);
     draw();
     requestAnimationFrame(update);
 }
