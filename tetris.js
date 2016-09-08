@@ -58,6 +58,9 @@ document.addEventListener('keydown', event => {
         player.pos.x--;
     } else if (event.keyCode === 39) {
         player.pos.x++;
+    } else if (event.keyCode === 40) {
+        player.pos.y++;
+        dropCounter = 0;
     }
 });
 
