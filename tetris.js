@@ -34,8 +34,12 @@ function draw() {
     drawMatrix(player.matrix, player.pos);
 }
 
-function update(time) {
-    console.log(time);
+let lastTime = 0;
+function update(time = 0) {
+    const deltaTime = time - lastTime;
+    console.log(deltaTime);
+    lastTime = time;
+
     draw();
     requestAnimationFrame(update);
 }
