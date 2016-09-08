@@ -33,3 +33,10 @@ const player = {
 function draw() {
     drawMatrix(player.matrix, player.pos);
 }
+
+function update() {
+    draw();
+    requestAnimationFrame(update);
+}
+
+update();
