@@ -107,6 +107,17 @@ function playerMove(offset) {
     }
 }
 
+function playerReset() {
+    player.matrix = [
+        [0, 1, 0],
+        [1, 1, 1],
+        [0, 0, 0],
+    ];
+    player.pos.y = 0;
+    player.pos.x = (arena[0].length / 2 | 0) -
+                   (player.matrix[0].length / 2 | 0);
+}
+
 function playerRotate(dir) {
     const pos = player.pos.x;
     let offset = 1;
