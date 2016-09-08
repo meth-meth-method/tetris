@@ -31,7 +31,6 @@ function drawMatrix(matrix, offset) {
 }
 
 const arena = createMatrix(12, 20);
-console.table(arena);
 
 const player = {
     pos: {x: 5, y: 5},
