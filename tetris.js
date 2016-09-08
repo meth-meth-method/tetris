@@ -3,12 +3,6 @@ const context = canvas.getContext('2d');
 
 context.scale(20, 20);
 
-const matrix = [
-    [0, 1, 0],
-    [1, 1, 1],
-    [0, 0, 0],
-];
-
 function collide(arena, player) {
     const m = player.matrix;
     const o = player.pos;
@@ -44,13 +38,6 @@ function drawMatrix(matrix, offset) {
         });
     });
 }
-
-const arena = createMatrix(12, 20);
-
-const player = {
-    pos: {x: 5, y: 5},
-    matrix: matrix,
-};
 
 function draw() {
     context.fillStyle = '#000';
@@ -95,7 +82,7 @@ function playerDrop() {
     if (collide(arena, player)) {
         player.pos.y--;
         merge(arena, player);
-        player.pos.y = 0;
+        playerReset();
     }
     dropCounter = 0;
 }
@@ -165,4 +152,12 @@ document.addEventListener('keydown', event => {
     }
 });
 
+const arena = createMatrix(12, 20);
+
+const player = {
+    pos: {x: 0, y: 0},
+    matrix: null,
+};
+
+playerReset();
 update();
