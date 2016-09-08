@@ -34,10 +34,19 @@ function draw() {
     drawMatrix(player.matrix, player.pos);
 }
 
+let dropCounter = 0;
+let dropInterval = 1000;
+
 let lastTime = 0;
 function update(time = 0) {
     const deltaTime = time - lastTime;
-    console.log(deltaTime);
+
+    dropCounter += deltaTime;
+    if (dropCounter > dropInterval) {
+        player.pos.y++;
+        dropCounter = 0;
+    }
+
     lastTime = time;
 
     draw();
