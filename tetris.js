@@ -107,6 +107,21 @@ function playerMove(offset) {
     }
 }
 
+function playerRotate(dir) {
+    const pos = player.pos.x;
+    let offset = 1;
+    rotate(player.matrix, dir);
+    while (collide(arena, player)) {
+        player.pos.x += offset;
+        offset = -(offset + (offset > 0 ? 1 : -1));
+        if (offset > player.matrix[0].length) {
+            rotate(player.matrix, -dir);
+            player.pos.x = pos;
+            return;
+        }
+    }
+}
+
 let dropCounter = 0;
 let dropInterval = 1000;
 
@@ -132,6 +147,10 @@ document.addEventListener('keydown', event => {
         playerMove(1);
     } else if (event.keyCode === 40) {
         playerDrop();
+    } else if (event.keyCode === 81) {
+        playerRotate(-1);
+    } else if (event.keyCode === 87) {
+        playerRotate(1);
     }
 });
 
