@@ -175,15 +175,19 @@ function playerReset() {
 }
 
 function playerRotate(dir) {
-    const pos = player.pos.x;
-    let offset = 1;
-    rotate(player.matrix, dir);
-    while (collide(arena, player)) {
+    const pos = player.pos.x; // Store players X position before rotation.
+    let offset = 1; // Assign an offset to use for later.
+    rotate(player.matrix, dir); // Perform the actual matrix rotation.
+    
+    // If there is a collision immediately after rotate, the rotation was illegal.
+    // But we allow rotation if the piece can fit when moved out from wall.
+    while (collide(arena, player)) { 
+        // Thus we try and move the piece left/right until it no longer collides, 
         player.pos.x += offset;
-        offset = -(offset + (offset > 0 ? 1 : -1));
-        if (offset > player.matrix[0].length) {
-            rotate(player.matrix, -dir);
-            player.pos.x = pos;
+        offset = -(offset + (offset > 0 ? 1 : -1)); // Produces 1, -2, 3, -4, 5 etc.
+        if (offset > player.matrix[0].length) { // If we have tried to offset more than the piece width, we deem the rotation unsuccessful/
+            rotate(player.matrix, -dir); // Reset rotation.
+            player.pos.x = pos; // Reset position.
             return;
         }
     }
